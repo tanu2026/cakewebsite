@@ -1,0 +1,29 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "cakeshop"
+  namespace: "cake"
+  labels:
+    app: "frontend"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "frontend"
+  template:
+    metadata:
+      labels:
+        app: "frontend"
+    spec:
+      containers:
+        - name: "cakeshop"
+          image: "794934876309.dkr.ecr.us-west-2.amazonaws.com/tanusha-k8s-project:IMAGE_ID"
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
