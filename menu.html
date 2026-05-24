@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Menu — Crumble & Co{% endblock %}
+
+{% block head %}
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--deep) 0%, #5c2440 100%);
+    padding: 4rem 6vw 3rem; text-align: center; color: #fff;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+    margin-bottom: .5rem;
+  }
+  .page-header p { color: #c4a8b0; font-size: 1rem; }
+
+  .filter-bar {
+    display: flex; flex-wrap: wrap; gap: .75rem;
+    justify-content: center; padding: 2.5rem 6vw 1rem;
+  }
+  .filter-btn {
+    padding: .5rem 1.4rem; border-radius: 50px;
+    border: 2px solid var(--rose); background: transparent;
+    color: var(--rose); font-family: 'DM Sans', sans-serif;
+    font-size: .85rem; font-weight: 500; cursor: pointer;
+    text-decoration: none; transition: all .2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--rose); color: #fff;
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem; padding: 2rem 6vw 5rem;
+  }
+  .menu-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 2rem; box-shadow: var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+    position: relative; display: flex; flex-direction: column;
+  }
+  .menu-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(59,26,46,.15); }
+  .menu-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    transition: border-color .2s;
+    pointer-events: none;
+  }
+  .menu-card:hover::after { border-color: var(--rose); }
+
+  .menu-emoji { font-size: 3rem; margin-bottom: .8rem; }
+  .menu-tag {
+    display: inline-block;
+    background: var(--cream); border: 1px solid var(--blush);
+    color: var(--rose); font-size: .72rem; font-weight: 500;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: .2rem .7rem; border-radius: 50px; margin-bottom: .8rem;
+  }
+  .menu-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; color: var(--deep);
+    margin-bottom: .4rem;
+  }
+  .menu-cat { font-size: .8rem; color: var(--muted); margin-bottom: .6rem; }
+  .menu-desc { color: var(--muted); font-size: .88rem; line-height: 1.6; flex: 1; margin-bottom: 1.2rem; }
+  .menu-footer { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: wrap; }
+  .menu-price { font-size: 1.2rem; font-weight: 700; color: var(--rose); }
+  .menu-footer .btn { font-size: .82rem; padding: .45rem 1.2rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+  <h1>🎂 Our Cake Menu</h1>
+  <p>From classic favourites to artisan specialties — there's a cake for every mood.</p>
+</header>
+
+<div class="filter-bar">
+  {% for cat in categories %}
+  <a class="filter-btn {% if cat == active %}active{% endif %}"
+     href="/menu?category={{ cat }}">{{ cat }}</a>
+  {% endfor %}
+</div>
+
+<div class="menu-grid">
+  {% for cake in cakes %}
+  <div class="menu-card">
+    <span class="menu-emoji">{{ cake.emoji }}</span>
+    <span class="menu-tag">{{ cake.tag }}</span>
+    <div class="menu-name">{{ cake.name }}</div>
+    <div class="menu-cat">{{ cake.category }}</div>
+    <p class="menu-desc">{{ cake.description }}</p>
+    <div class="menu-footer">
+      <span class="menu-price">₹{{ "%.0f"|format(cake.price * 90) }}</span>
+      <a class="btn btn-primary" href="/cake/{{ cake.id }}">Details</a>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

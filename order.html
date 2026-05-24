@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Order a Cake — Crumble & Co{% endblock %}
+
+{% block head %}
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--deep) 0%, #5c2440 100%);
+    padding: 4rem 6vw 3rem; text-align: center; color: #fff;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+    margin-bottom: .5rem;
+  }
+  .page-header p { color: #c4a8b0; }
+
+  .order-wrap {
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem;
+    padding: 4rem 6vw 5rem; max-width: 1000px; margin: 0 auto;
+  }
+  @media(max-width:650px){ .order-wrap { grid-template-columns:1fr; } }
+
+  .order-form { background: var(--card-bg); border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); }
+  .order-form h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--deep); margin-bottom: 1.5rem; }
+
+  .form-group { margin-bottom: 1.3rem; }
+  .form-group label { display: block; font-size: .85rem; font-weight: 500; color: var(--deep); margin-bottom: .4rem; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: .75rem 1rem;
+    border: 2px solid #e8d8df; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: .95rem;
+    background: #fff; color: var(--text);
+    transition: border-color .2s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { outline: none; border-color: var(--rose); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-submit { width: 100%; font-size: 1rem; padding: .85rem; }
+
+  /* Size picker */
+  .size-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: .75rem; }
+  .size-option { text-align:center; }
+  .size-option input[type=radio] { display:none; }
+  .size-label {
+    display: block; padding: .7rem .5rem;
+    border: 2px solid #e8d8df; border-radius: 10px;
+    cursor: pointer; font-size: .85rem; color: var(--muted);
+    transition: all .2s;
+  }
+  .size-option input[type=radio]:checked + .size-label {
+    border-color: var(--rose); background: #fdf0f4; color: var(--rose); font-weight: 600;
+  }
+
+  /* Side info */
+  .order-info h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--deep); margin-bottom: 1.5rem; }
+  .info-block {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 1.5rem; box-shadow: var(--shadow); margin-bottom: 1.5rem;
+    border-left: 4px solid var(--gold);
+  }
+  .info-block h3 { font-family: 'Playfair Display', serif; color: var(--deep); font-size: 1rem; margin-bottom: .6rem; }
+  .info-block p { color: var(--muted); font-size: .88rem; line-height: 1.6; }
+  .info-block ul { padding-left: 1.2rem; color: var(--muted); font-size: .88rem; line-height: 2; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+  <h1>🎂 Place an Order</h1>
+  <p>Custom cakes crafted to your exact taste. Delivery within Hyderabad.</p>
+</header>
+
+<div class="order-wrap">
+  <div class="order-form">
+    <h2>Your Order Details</h2>
+    <form method="POST" action="/order">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Rohan Mehta" required />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" />
+      </div>
+      <div class="form-group">
+        <label for="cake">Choose Your Cake</label>
+        <select id="cake" name="cake" required>
+          <option value="" disabled selected>Select a cake…</option>
+          {% for c in cakes %}
+          <option value="{{ c.name }}">{{ c.emoji }} {{ c.name }} — ₹{{ "%.0f"|format(c.price * 90) }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cake Size</label>
+        <div class="size-grid">
+          <div class="size-option">
+            <input type="radio" name="size" id="s1" value="500g" checked />
+            <label class="size-label" for="s1">500g<br><small>Serves 4</small></label>
+          </div>
+          <div class="size-option">
+            <input type="radio" name="size" id="s2" value="1kg" />
+            <label class="size-label" for="s2">1 kg<br><small>Serves 8</small></label>
+          </div>
+          <div class="size-option">
+            <input type="radio" name="size" id="s3" value="2kg" />
+            <label class="size-label" for="s3">2 kg<br><small>Serves 16</small></label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="date">Delivery / Pickup Date</label>
+        <input type="date" id="date" name="date" required />
+      </div>
+      <div class="form-group">
+        <label for="address">Delivery Address</label>
+        <input type="text" id="address" name="address" placeholder="House no, Street, Area, Hyderabad" />
+      </div>
+      <div class="form-group">
+        <label for="message">Special Instructions (optional)</label>
+        <textarea id="message" name="message" placeholder="Write a message on the cake, allergy notes, decoration preferences…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Place Order 🎂</button>
+    </form>
+  </div>
+
+  <div class="order-info">
+    <h2>Good to Know</h2>
+    <div class="info-block">
+      <h3>🚚 Delivery Info</h3>
+      <p>Free delivery within 15 km of Jubilee Hills. Order by 10 AM for same-day delivery.</p>
+    </div>
+    <div class="info-block">
+      <h3>⏱️ Lead Time</h3>
+      <ul>
+        <li>Standard cakes: Same day</li>
+        <li>Custom designs: 2–3 days</li>
+        <li>Wedding / tiered: 5–7 days</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <h3>💳 Payment</h3>
+      <p>We accept UPI, cards, net banking, and cash on delivery. 50% advance for custom orders.</p>
+    </div>
+    <div class="info-block">
+      <h3>📞 Need Help?</h3>
+      <p>Call us at <strong>+91 98765 43210</strong> or <a href="/contact" style="color:var(--rose)">send a message</a>.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

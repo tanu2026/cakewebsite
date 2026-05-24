@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Crumble & Co — Artisan Cakes{% endblock %}
+
+{% block head %}
+<style>
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    background: linear-gradient(135deg, var(--deep) 0%, #5c2440 50%, #3b1a2e 100%);
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 6vw;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(212,168,71,.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 20% 80%, rgba(194,80,110,.12) 0%, transparent 50%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(212,168,71,.15); border: 1px solid var(--gold);
+    color: var(--gold); font-size: .78rem; letter-spacing: 2px;
+    text-transform: uppercase; padding: .4rem 1.2rem; border-radius: 50px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    font-weight: 900; line-height: 1.05;
+    color: #fff; margin-bottom: 1.5rem;
+    animation: fadeUp .6s .1s ease both;
+  }
+  .hero-title em { color: var(--blush); font-style: italic; }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: #c4a8b0; max-width: 540px; margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    animation: fadeUp .6s .2s ease both;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp .6s .3s ease both;
+  }
+  .hero-emoji {
+    font-size: 5rem; margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+    display: block;
+  }
+
+  /* ── FEATURED ── */
+  .featured { padding: 5rem 6vw; }
+  .featured-header { text-align: center; margin-bottom: 3rem; }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .cake-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform .25s, box-shadow .25s;
+    position: relative; overflow: hidden;
+  }
+  .cake-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(59,26,46,.15); }
+  .cake-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+  }
+  .cake-emoji { font-size: 3.5rem; margin-bottom: 1rem; display: block; }
+  .cake-tag {
+    display: inline-block;
+    background: var(--rose); color: #fff;
+    font-size: .72rem; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; padding: .25rem .75rem; border-radius: 50px;
+    margin-bottom: .8rem;
+  }
+  .cake-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--deep);
+    margin-bottom: .5rem;
+  }
+  .cake-desc { color: var(--muted); font-size: .9rem; line-height: 1.6; margin-bottom: 1.2rem; }
+  .cake-price { font-size: 1.3rem; font-weight: 700; color: var(--rose); }
+  .cake-card .btn { margin-top: 1rem; font-size: .85rem; padding: .55rem 1.4rem; }
+
+  /* ── WHY US ── */
+  .why { background: var(--deep); padding: 5rem 6vw; color: #fff; }
+  .why .section-title { color: #fff; }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem; margin-top: 2.5rem;
+  }
+  .why-item { text-align: center; }
+  .why-icon { font-size: 2.8rem; margin-bottom: 1rem; }
+  .why-item h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.1rem;
+    color: var(--blush); margin-bottom: .5rem;
+  }
+  .why-item p { font-size: .88rem; color: #c4a8b0; line-height: 1.6; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { padding: 5rem 6vw; }
+  .testimonials-header { text-align: center; margin-bottom: 3rem; }
+  .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+  .testi-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 2rem; box-shadow: var(--shadow);
+    border-left: 4px solid var(--gold);
+  }
+  .testi-stars { color: var(--gold); font-size: 1.1rem; margin-bottom: .8rem; }
+  .testi-text { color: var(--muted); font-size: .93rem; line-height: 1.7; font-style: italic; margin-bottom: 1rem; }
+  .testi-name { font-weight: 600; color: var(--deep); font-size: .9rem; }
+
+  /* ── CTA STRIP ── */
+  .cta-strip {
+    background: linear-gradient(135deg, var(--rose), #a83e5a);
+    padding: 4rem 6vw; text-align: center; color: #fff;
+  }
+  .cta-strip h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1rem; }
+  .cta-strip p { opacity: .85; margin-bottom: 2rem; font-size: 1rem; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+  <div style="position:relative;z-index:1">
+    <span class="hero-emoji">🎂</span>
+    <div class="hero-badge">Artisan Bakery · Hyderabad</div>
+    <h1 class="hero-title">Cakes Baked with<br><em>Pure Love</em></h1>
+    <p class="hero-sub">Every celebration deserves a masterpiece. We craft bespoke cakes from the finest ingredients — no shortcuts, only love.</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="/menu">Explore Menu</a>
+      <a class="btn btn-outline" style="border-color:var(--blush);color:var(--blush)" href="/order">Place an Order</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="featured">
+  <div class="featured-header">
+    <p class="section-label">Our Favourites</p>
+    <h2 class="section-title">Customer Loved Cakes</h2>
+    <div class="divider" style="margin:0 auto 2rem"></div>
+  </div>
+  <div class="cards-grid">
+    {% for cake in featured %}
+    <div class="cake-card">
+      <span class="cake-emoji">{{ cake.emoji }}</span>
+      <span class="cake-tag">{{ cake.tag }}</span>
+      <div class="cake-name">{{ cake.name }}</div>
+      <p class="cake-desc">{{ cake.description }}</p>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+        <span class="cake-price">₹{{ "%.0f"|format(cake.price * 90) }}</span>
+        <a class="btn btn-outline" href="/cake/{{ cake.id }}">View Details</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div style="text-align:center;margin-top:3rem">
+    <a class="btn btn-primary" href="/menu">See Full Menu →</a>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why">
+  <div style="text-align:center">
+    <p class="section-label" style="color:var(--gold)">Why Choose Us</p>
+    <h2 class="section-title">The Crumble & Co Difference</h2>
+    <div class="divider" style="margin:0 auto"></div>
+  </div>
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-icon">🌿</div>
+      <h3>All-Natural Ingredients</h3>
+      <p>We use only the finest locally sourced dairy, free-range eggs, and natural flavours. No artificial colours ever.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🎨</div>
+      <h3>Hand-Crafted Designs</h3>
+      <p>Every cake is a work of art. Our pastry chefs hand-pipe every detail with precision and passion.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🚚</div>
+      <h3>Same-Day Delivery</h3>
+      <p>Order by 10 AM and receive your cake by evening. Fresh-baked happiness delivered to your door.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-icon">🎁</div>
+      <h3>Custom Orders</h3>
+      <p>Birthday, wedding, or just because — we personalise every cake to match your vision and occasion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <p class="section-label">Happy Customers</p>
+    <h2 class="section-title">What People Are Saying</h2>
+    <div class="divider" style="margin:0 auto 2rem"></div>
+  </div>
+  <div class="testi-grid">
+    {% for t in testimonials %}
+    <div class="testi-card">
+      <div class="testi-stars">{% for i in range(t.stars) %}★{% endfor %}</div>
+      <p class="testi-text">"{{ t.text }}"</p>
+      <span class="testi-name">— {{ t.name }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <h2>Ready to Order Your Dream Cake?</h2>
+  <p>Tell us your occasion — we'll handle the rest. No cake request is too big or too small.</p>
+  <a class="btn btn-gold" href="/order">Order Now 🎂</a>
+</section>
+
+{% endblock %}

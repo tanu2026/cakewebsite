@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us — Crumble & Co{% endblock %}
+
+{% block head %}
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--deep) 0%, #5c2440 100%);
+    padding: 4rem 6vw 3rem; text-align: center; color: #fff;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+    margin-bottom: .5rem;
+  }
+  .page-header p { color: #c4a8b0; }
+
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 3rem;
+    padding: 4rem 6vw; max-width: 1000px; margin: 0 auto;
+  }
+  @media(max-width:650px){ .contact-wrap { grid-template-columns:1fr; } }
+
+  .contact-info h2 {
+    font-family: 'Playfair Display', serif; font-size: 1.6rem;
+    color: var(--deep); margin-bottom: 1.5rem;
+  }
+  .info-item { display: flex; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-start; }
+  .info-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .info-label { font-size: .78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--rose); font-weight: 500; margin-bottom: .2rem; }
+  .info-val { color: var(--text); font-size: .95rem; line-height: 1.5; }
+
+  .contact-form { background: var(--card-bg); border-radius: var(--radius); padding: 2.5rem; box-shadow: var(--shadow); }
+  .contact-form h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--deep); margin-bottom: 1.5rem; }
+
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label { display: block; font-size: .85rem; font-weight: 500; color: var(--deep); margin-bottom: .4rem; }
+  .form-group input,
+  .form-group textarea {
+    width: 100%; padding: .75rem 1rem;
+    border: 2px solid #e8d8df; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: .95rem;
+    background: #fff; color: var(--text);
+    transition: border-color .2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none; border-color: var(--rose);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-submit { width: 100%; font-size: 1rem; padding: .85rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+  <h1>💌 Get in Touch</h1>
+  <p>Have a question? Want a custom cake? We'd love to hear from you.</p>
+</header>
+
+<div class="contact-wrap">
+  <div class="contact-info">
+    <h2>Contact Information</h2>
+    <div class="info-item">
+      <span class="info-icon">📍</span>
+      <div>
+        <div class="info-label">Address</div>
+        <div class="info-val">12, Jubilee Hills,<br>Hyderabad, Telangana 500033</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">📞</span>
+      <div>
+        <div class="info-label">Phone</div>
+        <div class="info-val">+91 98765 43210</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">✉️</span>
+      <div>
+        <div class="info-label">Email</div>
+        <div class="info-val">hello@crumbleandco.in</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">🕐</span>
+      <div>
+        <div class="info-label">Hours</div>
+        <div class="info-val">Mon – Sat: 8 AM – 8 PM<br>Sunday: 9 AM – 6 PM</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">🚚</span>
+      <div>
+        <div class="info-label">Delivery</div>
+        <div class="info-val">Free delivery within 15 km.<br>Same-day if ordered by 10 AM.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form">
+    <h2>Send Us a Message</h2>
+    <form method="POST" action="/contact">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Priya Sharma" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="priya@email.com" required />
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us about your occasion or ask anything…" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary form-submit">Send Message 💌</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}{{ cake.name }} — Crumble & Co{% endblock %}
+
+{% block head %}
+<style>
+  .detail-wrap {
+    max-width: 900px; margin: 3rem auto; padding: 0 6vw;
+  }
+  .breadcrumb { font-size: .85rem; color: var(--muted); margin-bottom: 2rem; }
+  .breadcrumb a { color: var(--rose); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .detail-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: 0;
+  }
+  @media(max-width:600px){ .detail-card { grid-template-columns: 1fr; } }
+
+  .detail-visual {
+    background: linear-gradient(135deg, var(--deep), #5c2440);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8rem; min-height: 300px;
+  }
+  .detail-info { padding: 2.5rem; }
+  .detail-tag {
+    display: inline-block;
+    background: var(--rose); color: #fff;
+    font-size: .72rem; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; padding: .25rem .75rem; border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+  .detail-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 900; color: var(--deep);
+    line-height: 1.2; margin-bottom: .5rem;
+  }
+  .detail-cat { color: var(--muted); font-size: .9rem; margin-bottom: 1.2rem; }
+  .detail-desc { color: var(--text); font-size: .97rem; line-height: 1.8; margin-bottom: 2rem; }
+  .detail-price { font-size: 2rem; font-weight: 700; color: var(--rose); margin-bottom: 1.5rem; }
+  .detail-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .ingredients {
+    background: var(--cream); border-radius: var(--radius);
+    padding: 1.5rem; margin-top: 1.5rem;
+    border: 1px solid var(--blush);
+  }
+  .ingredients h4 {
+    font-family: 'Playfair Display', serif; color: var(--deep);
+    margin-bottom: .8rem; font-size: 1rem;
+  }
+  .ingredient-tag {
+    display: inline-block; background: #fff; border: 1px solid var(--blush);
+    color: var(--muted); font-size: .78rem; padding: .2rem .7rem;
+    border-radius: 50px; margin: .2rem;
+  }
+
+  /* Related */
+  .related { padding: 3rem 6vw 5rem; max-width: 900px; margin: 0 auto; }
+  .related-title {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem;
+    color: var(--deep); margin-bottom: 1.5rem;
+  }
+  .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 1.5rem; }
+  .rel-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 1.5rem; box-shadow: var(--shadow);
+    text-decoration: none; color: inherit;
+    transition: transform .2s;
+    display: block;
+  }
+  .rel-card:hover { transform: translateY(-4px); }
+  .rel-emoji { font-size: 2.5rem; margin-bottom: .6rem; }
+  .rel-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--deep); margin-bottom: .3rem; }
+  .rel-price { font-size: .95rem; color: var(--rose); font-weight: 600; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="detail-wrap">
+  <div class="breadcrumb">
+    <a href="/">Home</a> › <a href="/menu">Menu</a> › {{ cake.name }}
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-visual">{{ cake.emoji }}</div>
+    <div class="detail-info">
+      <span class="detail-tag">{{ cake.tag }}</span>
+      <h1 class="detail-name">{{ cake.name }}</h1>
+      <div class="detail-cat">Category: {{ cake.category }}</div>
+      <p class="detail-desc">{{ cake.description }}</p>
+      <div class="detail-price">₹{{ "%.0f"|format(cake.price * 90) }}</div>
+      <div class="detail-btns">
+        <a class="btn btn-primary" href="/order">Order This Cake</a>
+        <a class="btn btn-outline" href="/menu">← Back to Menu</a>
+      </div>
+
+      <div class="ingredients">
+        <h4>🌿 Key Highlights</h4>
+        <span class="ingredient-tag">Natural Ingredients</span>
+        <span class="ingredient-tag">Preservative-Free</span>
+        <span class="ingredient-tag">Hand-Crafted</span>
+        <span class="ingredient-tag">Custom Sizes</span>
+        <span class="ingredient-tag">Same-Day Delivery</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if related %}
+<div class="related">
+  <h2 class="related-title">You might also like</h2>
+  <div class="related-grid">
+    {% for r in related %}
+    <a class="rel-card" href="/cake/{{ r.id }}">
+      <div class="rel-emoji">{{ r.emoji }}</div>
+      <div class="rel-name">{{ r.name }}</div>
+      <div class="rel-price">₹{{ "%.0f"|format(r.price * 90) }}</div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

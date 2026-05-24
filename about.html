@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}About Us — Crumble & Co{% endblock %}
+
+{% block head %}
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--deep) 0%, #5c2440 100%);
+    padding: 4rem 6vw 3rem; text-align: center; color: #fff;
+  }
+  .page-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900;
+    margin-bottom: .5rem;
+  }
+  .page-header p { color: #c4a8b0; }
+
+  .about-story {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    padding: 5rem 6vw; align-items: center; max-width: 1100px; margin: 0 auto;
+  }
+  @media(max-width:650px){ .about-story { grid-template-columns:1fr; gap:2rem; } }
+
+  .story-visual {
+    background: linear-gradient(135deg, var(--deep), #5c2440);
+    border-radius: var(--radius); min-height: 320px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem;
+    box-shadow: var(--shadow);
+  }
+  .story-text .section-title { text-align: left; }
+  .story-text p {
+    color: var(--muted); line-height: 1.8; margin-bottom: 1rem; font-size: .95rem;
+  }
+
+  .values { background: var(--deep); padding: 5rem 6vw; color: #fff; }
+  .values .section-title { color: #fff; text-align: center; }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 2rem; margin-top: 2.5rem;
+  }
+  .value-item {
+    background: rgba(255,255,255,.06); border-radius: var(--radius);
+    padding: 2rem; text-align: center;
+    border: 1px solid rgba(245,197,163,.15);
+    transition: background .2s;
+  }
+  .value-item:hover { background: rgba(255,255,255,.1); }
+  .value-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .value-item h3 { font-family: 'Playfair Display', serif; color: var(--blush); margin-bottom: .5rem; font-size: 1.1rem; }
+  .value-item p { color: #c4a8b0; font-size: .88rem; line-height: 1.6; }
+
+  .team { padding: 5rem 6vw; text-align: center; }
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 2rem; margin-top: 2.5rem; }
+  .team-card {
+    background: var(--card-bg); border-radius: var(--radius);
+    padding: 2rem; box-shadow: var(--shadow);
+  }
+  .team-avatar { font-size: 3.5rem; margin-bottom: 1rem; }
+  .team-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--deep); margin-bottom: .3rem; }
+  .team-role { font-size: .82rem; color: var(--rose); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<header class="page-header">
+  <h1>🧑‍🍳 Our Story</h1>
+  <p>A small bakery with a big heart — baking joy since 2015.</p>
+</header>
+
+<section class="about-story">
+  <div class="story-visual">🎂</div>
+  <div class="story-text">
+    <p class="section-label">Our Story</p>
+    <h2 class="section-title">Born from a Love of Baking</h2>
+    <div class="divider"></div>
+    <p>Crumble & Co began in a small home kitchen in Hyderabad in 2015. Our founder, Meera Reddy, started with one simple belief: every occasion deserves a cake made with genuine care and the finest ingredients.</p>
+    <p>What started as weekend orders for neighbours and friends quickly grew into a beloved local institution. Today, we bake over 200 cakes a week, but each one still receives the same personal attention as that very first batch.</p>
+    <p>We source our dairy locally, use only natural flavours, and never rush the process. Baking is our art — and you are our canvas.</p>
+    <a class="btn btn-primary" href="/order" style="margin-top:.5rem">Order Your Cake</a>
+  </div>
+</section>
+
+<section class="values">
+  <p class="section-label" style="color:var(--gold);text-align:center">What We Believe</p>
+  <h2 class="section-title">Our Core Values</h2>
+  <div class="values-grid">
+    <div class="value-item">
+      <div class="value-icon">💛</div>
+      <h3>Made with Love</h3>
+      <p>Every cake is handcrafted with genuine care. We never automate what should be done by hand.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🌱</div>
+      <h3>Natural Always</h3>
+      <p>No artificial colours, no preservatives. Just real ingredients from trusted local farms.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">⏱️</div>
+      <h3>Never Rush</h3>
+      <p>Great cakes take time. We follow proper resting, chilling, and layering at every step.</p>
+    </div>
+    <div class="value-item">
+      <div class="value-icon">🎯</div>
+      <h3>Perfect Every Time</h3>
+      <p>We don't ship a cake we wouldn't proudly serve at our own table. Quality is non-negotiable.</p>
+    </div>
+  </div>
+</section>
+
+<section class="team">
+  <p class="section-label">The Bakers</p>
+  <h2 class="section-title">Meet Our Team</h2>
+  <div class="divider" style="margin:0 auto 2rem"></div>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar">👩‍🍳</div>
+      <div class="team-name">Meera Reddy</div>
+      <div class="team-role">Founder & Head Baker</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">👨‍🍳</div>
+      <div class="team-name">Arjun Nair</div>
+      <div class="team-role">Pastry Chef</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">👩‍🎨</div>
+      <div class="team-name">Divya Sharma</div>
+      <div class="team-role">Cake Artist & Decorator</div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar">🧑‍💼</div>
+      <div class="team-name">Karan Mehta</div>
+      <div class="team-role">Flavour & R&D</div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
