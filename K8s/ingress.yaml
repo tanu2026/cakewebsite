@@ -10,11 +10,11 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:794934876309:certificate/b5bc39eb-58eb-45ca-b8a9-b59143a0a33a
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-west-2:794934876309:certificate/25a2c6e3-d51e-4047-aa78-454f16455188
 spec:
   ingressClassName: alb
   rules:
-  - host: grafana.tanushadevops.shop
+  - host: tanushadevops.shop
     http:
       paths:
       - path: /
