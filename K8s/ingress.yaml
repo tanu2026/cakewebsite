@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: tanushadevops.shop
+  - host: cake.tanushadevops.shop
     http:
       paths:
       - path: /
